@@ -2,7 +2,7 @@
 
 This repository is created for personal use as a tool for quickly deploying and testing projects.
 
-The workflow is based on pushing different projects to separate branches in this repository. Each branch represents a standalone project, which is automatically deployed on the server into a dedicated folder under `/home/projects/<branch-name>`.
+The workflow is based on pushing different projects to separate branches in this repository. Each branch represents a standalone project, which is automatically deployed on the server into a dedicated folder under `/var/www/projects/<branch-name>`.
 
 ## Automation and Infrastructure
 
@@ -12,7 +12,7 @@ The workflow is based on pushing different projects to separate branches in this
 
 - **SSL Certificates**: Certificates are configured with Cloudflare DNS API for automated issuance and renewal. This ensures that every project subdomain is available over HTTPS.
 
-- **NGINX Configuration**: A single NGINX server block is configured with a wildcard `server_name` to proxy requests to projects in `/home/projects`. This setup automatically serves all projects without requiring manual changes to the NGINX configuration for each new deployment.
+- **NGINX Configuration**: A single NGINX server block is configured with a wildcard `server_name` to proxy requests to projects in `/var/www/projects`. This setup automatically serves all projects without requiring manual changes to the NGINX configuration for each new deployment.
 
 ## Notes
 
