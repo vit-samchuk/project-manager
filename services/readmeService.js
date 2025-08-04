@@ -1,11 +1,40 @@
 const fs = require('fs/promises');
 const path = require('path');
+const { marked } = require('marked');
+
 const { commitAndPush } = require('./gitService');
 
 const readmePath = path.join(__dirname, '../readme.md');
 
 async function getReadme() {
   return await fs.readFile(readmePath, 'utf-8');
+}
+
+async function getReadmeHtml(param) {
+  const readme = await getReadme();
+  const html = marked.parse(readme);
+  return `
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>README</title>
+        <style>
+          body {
+            font-family: sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            line-height: 1.6;
+          }
+          code { background: #f0f0f0; padding: 2px 4px; }
+          pre { background: #f0f0f0; padding: 10px; overflow-x: auto; }
+        </style>
+      </head>
+      <body>${html}</body>
+    </html>
+  `;
 }
 
 function formatLine(name, url) {
@@ -35,4 +64,4 @@ async function removeProject(name) {
   //await commitAndPush('Remove project: ' + name);
 }
 
-module.exports = { addProject, removeProject };
+module.exports = { addProject, removeProject, getReadmeHtml };
