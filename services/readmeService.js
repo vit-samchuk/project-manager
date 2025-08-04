@@ -19,18 +19,8 @@ async function getReadmeHtml(param) {
       <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>README</title>
-        <style>
-          body {
-            font-family: sans-serif;
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 0 20px;
-            line-height: 1.6;
-          }
-          code { background: #f0f0f0; padding: 2px 4px; }
-          pre { background: #f0f0f0; padding: 10px; overflow-x: auto; }
-        </style>
+        <title>Projects</title>
+        <link rel="stylesheet" href="/style.css" />
       </head>
       <body>${html}</body>
     </html>

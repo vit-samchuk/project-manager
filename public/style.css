@@ -1,0 +1,25 @@
+body {
+  font-family: sans-serif;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px;
+  line-height: 1.6;
+  background: #f9f9f9;
+}
+
+h1, h2, h3 {
+  color: #333;
+}
+
+code {
+  background: #f0f0f0;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+pre {
+  background: #f0f0f0;
+  padding: 10px;
+  overflow-x: auto;
+  border-radius: 4px;
+}
