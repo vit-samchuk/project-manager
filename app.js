@@ -5,7 +5,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 
 const projectRoutes = require('./routes/projects');
-const { getReadmeHtml } = require('../services/readmeService');
+const { getReadmeHtml } = require('./services/readmeService');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
