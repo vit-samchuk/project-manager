@@ -4,7 +4,7 @@ const fs = require('fs/promises');
 const path = require('path');
 const bodyParser = require('body-parser');
 
-const projectRoutes = require('./routes/projects');
+const projectRoutes = require('./routes/projects.route');
 const { getReadmeHtml } = require('./services/readmeService');
 
 const app = express();
