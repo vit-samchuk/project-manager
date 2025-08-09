@@ -4,6 +4,17 @@ const { addProject, removeProject } = require('../services/projects.service');
 
 const router = express.Router();
 
+router.post('/gh-hool', auth, async (req, res) => {
+  console.log(req.body)
+  res.send({ success: true });
+  return
+  const { name, url, description } = req.body;
+  if (!name || !url) return res.status(400).send({ error: 'Missing name or url' });
+
+  await addProject({ name, url, description });
+  res.send({ success: true });
+});
+
 router.post('/', auth, async (req, res) => {
   console.log(req.body)
   return
