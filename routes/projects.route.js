@@ -4,7 +4,7 @@ const { addProject, removeProject } = require('../services/projects.service');
 
 const router = express.Router();
 
-router.post('/gh-hool', auth, async (req, res) => {
+router.post('/gh-hook', async (req, res) => {
   console.log(req.body)
   res.send({ success: true });
   return
