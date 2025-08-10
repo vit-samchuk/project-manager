@@ -11,7 +11,7 @@ function authMiddlewareGitHub(req, res, next) {
   const secret = process.env.API_TOKEN;
   const signature = req.headers['x-hub-signature-256'];
 
-  console.log({ secret, signature })
+  console.log({ secret, signature, rawBody: req.rawBody })
 
   if (!signature) {
     return res.status(401).json({ error: 'Unauthorized' });
