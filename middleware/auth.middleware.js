@@ -17,7 +17,7 @@ function authMiddlewareGitHub(req, res, next) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
   const hmac = crypto.createHmac('sha256', secret);
-  const digest = 'sha256=' + hmac.update(JSON.stringify(req.rawBody)).digest('hex');
+  const digest = 'sha256=' + hmac.update(req.rawBody).digest('hex');
   const verified = crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(digest));
   console.log({ verified })
   if (!verified) {
