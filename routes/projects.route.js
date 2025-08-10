@@ -8,8 +8,9 @@ router.get('/test', (req, res) => {
   console.log(req)
   res.send('ok')
 })
-router.post('/gh-hook', async (req, res) => {
-  console.log(req.body)
+router.post('/gh-hook', express.json({ type: '*/*' }), async (req, res) => {
+  console.log('Headers:', req.headers);
+  console.log('Body:', req.body);
   res.send({ success: true });
   return
   const { name, url, description } = req.body;
