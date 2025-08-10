@@ -5,10 +5,33 @@ const { addProject, removeProject } = require('../services/projects.service');
 const router = express.Router();
 
 router.post('/gh-hook', auth, async (req, res) => {
-  console.log('Headers:', req.headers);
-  console.log('Body:', req.body);
+  const event = req.headers['x-github-event'];
+  let branch = null;
+
+  if (event === 'push') {
+    branch = req.body.ref.replace('refs/heads/', '');
+  } else if (event === 'create' || event === 'delete') {
+    if (req.body.ref_type === 'branch') {
+      branch = req.body.ref;
+    }
+  }
+
+  console.log({ event, branch });
+
+  if (event === 'push') {
+    handlePush(branch, req.body);
+  } else if (event === 'create') {
+    handleBranchCreate(branch);
+  } else if (event === 'delete') {
+    handleBranchDelete(branch);
+  }
+
   res.send({ success: true });
 });
+
+function handlePush() {}
+function handleBranchCreate() {}
+function handleBranchDelete() {}
 
 // router.post('/', auth, async (req, res) => {
 //   console.log(req.body)
