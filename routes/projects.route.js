@@ -13,7 +13,7 @@ router.post('/gh-hook', auth, async (req, res) => {
   
   const start = new Date()
   
-  console.log(`《${date.toLocaleString()}》`)
+  console.log(`《${start.toLocaleString()}》`)
   console.log({ branch, clone_url, event })
 
   if (event === 'create' && req.body.ref_type === 'branch') {
