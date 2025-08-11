@@ -34,6 +34,7 @@ const getReadmeHtml = async (param) => {
 }
 
 const generateReadme = async (projects) => {
+  console.log(projects)
   const template = await fs.readFile(templatePath, 'utf-8');
   const projectList = projects.map(formatProject).join('\n');
   

@@ -1,37 +1,31 @@
 const express = require('express');
 const auth = require('../middleware/auth.middleware')
-const { addProject, removeProject } = require('../services/projects.service');
+const { addProject, removeProject, updateProject } = require('../services/projects.service');
 
 const router = express.Router();
 
 router.post('/gh-hook', auth, async (req, res) => {
   const event = req.headers['x-github-event'];
-  let branch = null;
+  const branch = req.body.ref?.replace('refs/heads/', '') || req.body.ref;
+  const clone_url = req.body.repository.clone_url;
 
-  if (event === 'push') {
-    branch = req.body.ref.replace('refs/heads/', '');
-  } else if (event === 'create' || event === 'delete') {
-    if (req.body.ref_type === 'branch') {
-      branch = req.body.ref;
-    }
+  let result = null;
+  
+  console.log({ branch, clone_url })
+
+  if (event === 'create' && req.body.ref_type === 'branch') {
+    result = await addProject({ branch, clone_url });
+  } 
+  else if (event === 'delete' && req.body.ref_type === 'branch') {
+    result = await removeProject(branch);
+  } 
+  else if (event === 'push' && branch !== process.env.GIT_MAIN_BRANCH) {
+    result = await updateProject(branch);
   }
 
-  console.log({ event, branch });
-
-  if (event === 'push') {
-    handlePush(branch, req.body);
-  } else if (event === 'create') {
-    handleBranchCreate(branch);
-  } else if (event === 'delete') {
-    handleBranchDelete(branch);
-  }
-
-  res.send({ success: true });
+  res.json({ success: true, branch, result });
 });
 
-function handlePush() {}
-function handleBranchCreate() {}
-function handleBranchDelete() {}
 
 // router.post('/', auth, async (req, res) => {
 //   console.log(req.body)
