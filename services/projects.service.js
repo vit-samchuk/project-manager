@@ -15,7 +15,7 @@ const getPath = async (branch) => {
   let dirName = sanitizeBranch(branch);
   let finalName = dirName;
   let counter = 2;
-
+  
   while (true) {
     try {
       await fs.access(path.join(BASE_PATH, finalName));
@@ -25,7 +25,7 @@ const getPath = async (branch) => {
       break;
     }
   }
-
+  
   return {
     dir: finalName,
     path: path.join(BASE_PATH, finalName)
@@ -34,9 +34,13 @@ const getPath = async (branch) => {
 
 const getPackageInfo = async (projectPath) => {
   const pkgPath = path.join(projectPath, 'package.json');
-  const exists = await fs.exists(pkgPath);
   
-  if (!exists) return null;
+  try {
+    await fs.access(pkgPath);
+  } catch {
+    return null;
+  }
+  
   
   try {
     const content = await fs.readFile(pkgPath, 'utf-8');
@@ -80,11 +84,10 @@ const removeProject = async (branch) => {
   
   if (!project) return null;
   
-  const exists = await fs.exists(project.path)
-  
-  if (exists) {
+  if (await fs.access(project.path).then(() => true).catch(() => false)) {
     await fs.rm(project.path, { recursive: true, force: true });
   }
+  
   
   const filtered = projects.filter(p => p.branch !== branch);
   await fs.writeFile(dataPath, JSON.stringify(filtered, null, 2));

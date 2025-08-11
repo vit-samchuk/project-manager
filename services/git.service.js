@@ -1,6 +1,5 @@
 const simpleGit = require('simple-git');
-const fs = require('fs');
-const path = require('path');
+const fs = require('fs/promises');
 
 const git = simpleGit();
 git.addConfig('user.name', process.env.GIT_USER_NAME);
@@ -13,17 +12,18 @@ async function clone(cloneUrl, branch, targetPath) {
     targetPath
   })
   const gitInstance = simpleGit();
-
+  
   await gitInstance.clone(cloneUrl, targetPath, ['-b', branch, '--single-branch']);
 }
 
 async function pull(targetPath) {
-    if (!fs.existsSync(targetPath)) {
-      const err = new Error('No dir for branch!');
-      err.status = 400;
-      throw err;
-    };
-
+  if (!(await fs.access(targetPath).then(() => true).catch(() => false))) {
+    const err = new Error('No dir for branch!');
+    err.status = 400;
+    throw err;
+  }
+  
+  
   const gitInstance = simpleGit(targetPath);
   await gitInstance.pull();
 }
