@@ -5,7 +5,7 @@ const git = require('./git.service');
 
 const BASE_PATH = process.env.PROJECTS_PATH
 
-const dataPath = path.join(__dirname, '../data/projects.json');
+const dataPath = path.join(__dirname, '../projects.json');
 
 const loadProjects = async () => JSON.parse(await fs.readFile(dataPath, 'utf-8'));
 
