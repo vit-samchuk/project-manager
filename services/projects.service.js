@@ -82,7 +82,7 @@ const addProject = async ({ branch, clone_url }) => {
 
 const removeProject = async (branch) => {
   const projects = await loadProjects();
-  const project = project.find((p) => p.branch === branch)
+  const project = projects.find((p) => p.branch === branch)
   
   if (!project) return null;
   
