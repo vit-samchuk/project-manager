@@ -7,9 +7,14 @@ git.addConfig('user.name', process.env.GIT_USER_NAME);
 git.addConfig('user.email', process.env.GIT_USER_EMAIL);
 
 async function clone(cloneUrl, branch, targetPath) {
+  console.log({
+    cloneUrl,
+    branch,
+    targetPath
+  })
   const gitInstance = simpleGit();
 
-  await gitInstance.clone(cloneUrl, targetPath, ['-b', branch]);
+  await gitInstance.clone(cloneUrl, targetPath, ['-b', branch, '--single-branch']);
 }
 
 async function pull(targetPath) {
