@@ -55,7 +55,7 @@ const addProject = async ({ branch, clone_url }) => {
   console.log(branchPath)
   await git.clone(clone_url, branch, branchPath.path)
   console.log('CLONED')
-  const info = await getPackageInfo(projectPath.path);
+  const info = await getPackageInfo(branchPath.path);
   
   const project = {
     branch,
