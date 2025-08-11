@@ -3,7 +3,7 @@ const path = require('path');
 const { generateReadme } = require('./readme.service');
 const git = require('./git.service');
 
-const BASE_PA5H = process.env.PROJECTS_PATH
+const BASE_PATH = process.env.PROJECTS_PATH
 
 const dataPath = path.join(__dirname, '../data/projects.json');
 
@@ -54,7 +54,7 @@ const addProject = async ({ branch, clone_url }) => {
   const branchPath = getPath(branch)
   await git.clone(clone_url, branch, branchPath.path)
   
-  const info = await getPackageInfo(projectPath);
+  const info = await getPackageInfo(projectPat.path);
   
   const project = {
     branch,
