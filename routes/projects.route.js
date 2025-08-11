@@ -11,7 +11,10 @@ router.post('/gh-hook', auth, async (req, res) => {
 
   let result = null;
   
-  console.log({ branch, clone_url })
+  const start = new Date()
+  
+  console.log(`《${date.toLocaleString()}》`)
+  console.log({ branch, clone_url, event })
 
   if (event === 'create' && req.body.ref_type === 'branch') {
     result = await addProject({ branch, clone_url });
@@ -23,6 +26,7 @@ router.post('/gh-hook', auth, async (req, res) => {
     result = await updateProject(branch);
   }
 
+  console.log(`○○○ Done in ${(new Date() - start).toFixed(2)} ms`)
   res.json({ success: true, branch, result });
 });
 
