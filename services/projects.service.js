@@ -33,7 +33,7 @@ const getPath = async (branch) => {
 }
 
 const getPackageInfo = async (projectPath) => {
-  console.log('getPKG ', prejectPath)
+  console.log('getPKG ', projectPath)
   const pkgPath = path.join(projectPath, 'package.json');
   
   try {
@@ -110,7 +110,7 @@ const updateProject = async (branch) => {
   
   await git.pull(project.path);
   
-  const info = await getPackageInfo(projectPath);
+  const info = await getPackageInfo(project.path);
   
   if (project.name !== (info?.name ?? null) || project.description !== (info?.description ?? null)) {
     project.name = info.name ?? null;
