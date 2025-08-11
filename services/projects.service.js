@@ -33,10 +33,12 @@ const getPath = async (branch) => {
 }
 
 const getPackageInfo = async (projectPath) => {
+  console.log('getPKG ', prejectPath)
   const pkgPath = path.join(projectPath, 'package.json');
   
   try {
     await fs.access(pkgPath);
+    console.log('EXISTS: ', pkgPath)
   } catch {
     return null;
   }
