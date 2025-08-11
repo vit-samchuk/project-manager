@@ -5,27 +5,20 @@ const git = simpleGit();
 git.addConfig('user.name', process.env.GIT_USER_NAME);
 git.addConfig('user.email', process.env.GIT_USER_EMAIL);
 
-async function clone(cloneUrl, branch, targetPath) {
-  console.log({
-    cloneUrl,
-    branch,
-    targetPath
-  })
-  const gitInstance = simpleGit();
-  
-  await gitInstance.clone(cloneUrl, targetPath, ['-b', branch, '--single-branch']);
+async function clone(url, b, p) {
+  const git = simpleGit();
+  await git.clone(url, p, ['-b', b, '--single-branch']);
 }
 
-async function pull(targetPath) {
-  if (!(await fs.access(targetPath).then(() => true).catch(() => false))) {
+async function pull(p) {
+  if (!(await fs.access(p).then(() => true).catch(() => false))) {
     const err = new Error('No dir for branch!');
     err.status = 400;
     throw err;
   }
   
-  
-  const gitInstance = simpleGit(targetPath);
-  await gitInstance.pull();
+  const git = simpleGit(p);
+  await git.pull();
 }
 
 async function commitAndPush(message) {

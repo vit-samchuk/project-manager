@@ -33,16 +33,13 @@ const getPath = async (branch) => {
 }
 
 const getPackageInfo = async (projectPath) => {
-  console.log('getPKG ', projectPath)
   const pkgPath = path.join(projectPath, 'package.json');
   
   try {
     await fs.access(pkgPath);
-    console.log('EXISTS: ', pkgPath)
   } catch {
     return null;
   }
-  
   
   try {
     const content = await fs.readFile(pkgPath, 'utf-8');
@@ -58,11 +55,10 @@ const getPackageInfo = async (projectPath) => {
 
 const addProject = async ({ branch, clone_url }) => {
   const branchPath = await getPath(branch)
-  console.log(branchPath)
   await git.clone(clone_url, branch, branchPath.path)
-  console.log('CLONED 1')
+  
   const info = await getPackageInfo(branchPath.path);
-  console.log(info)
+  
   const project = {
     branch,
     dir: branchPath.dir,
@@ -99,10 +95,6 @@ const removeProject = async (branch) => {
 }
 
 const updateProject = async (branch) => {
-  // git pull branch
-  // fs get data from package
-  // update data and readme if changed
-  // git push readme update
   if (branch === 'main') return null;
   
   const projects = await loadProjects();
