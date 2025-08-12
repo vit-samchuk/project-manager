@@ -8,7 +8,8 @@ router.post('/gh-hook', auth, handler(async (req, res) => {
   const event = req.headers['x-github-event'];
   const branch = req.body.ref?.replace('refs/heads/', '') || req.body.ref;
   const clone_url = req.body.repository.clone_url;
-  
+  const branch_url = `${req.body.repository.html_url}/tree/${req.body.ref}`;
+
   let result = null;
   
   const start = new Date()
@@ -17,7 +18,7 @@ router.post('/gh-hook', auth, handler(async (req, res) => {
   console.log({ branch, clone_url, event })
   
   if (event === 'create' && req.body.ref_type === 'branch') {
-    result = await addProject({ branch, clone_url });
+    result = await addProject({ branch, clone_url, branch_url });
   }
   else if (event === 'delete' && req.body.ref_type === 'branch') {
     result = await removeProject(branch);

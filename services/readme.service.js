@@ -7,10 +7,27 @@ const templatePath = path.join(__dirname, '../readme.template.md');
 const readmePath = path.join(__dirname, '../readme.md');
 const dataPath = path.join(__dirname, '../projects.json');
 
-const formatProject = ({ name, url, description }) => {
-  const desc = description ? ` — ${description}` : '';
-  return `- [${name}](${url})${desc}`;
-}
+const formatProject = (p) => {
+  const title = p.name || p.branch;
+  const url = `https://${p.dir}.projects.do-code.com`;
+
+  let lines = [];
+
+  lines.push(`- [${title}](${url})`);
+
+  if (p.branch_url) {
+    lines.push(`  - Branch: [${p.branch}](${p.branch_url})`);
+  } else {
+    lines.push(`  - Branch: ${p.branch}`);
+  }
+
+  if (p.description) {
+    lines.push(`  - ${p.description}`);
+  }
+
+  return lines.join('\n');
+};
+
 
 const getReadmeHtml = async (param) => {
   const readme = await fs.readFile(readmePath, 'utf-8');
@@ -36,7 +53,7 @@ const getReadmeHtml = async (param) => {
 const generateReadme = async (projects) => {
   console.log(projects)
   const template = await fs.readFile(templatePath, 'utf-8');
-  const projectList = projects.map(formatProject).join('\n');
+  const projectList = projects.map(formatProject).join('\n\n');
   
   const rendered = template.replace('{{projects}}', projectList);
   await fs.writeFile(readmePath, rendered);

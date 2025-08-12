@@ -53,7 +53,7 @@ const getPackageInfo = async (projectPath) => {
   }
 }
 
-const addProject = async ({ branch, clone_url }) => {
+const addProject = async ({ branch, clone_url, branch_url }) => {
   const branchPath = await getPath(branch)
   await git.clone(clone_url, branch, branchPath.path)
   
@@ -61,6 +61,7 @@ const addProject = async ({ branch, clone_url }) => {
   
   const project = {
     branch,
+    branch_url,
     dir: branchPath.dir,
     path: branchPath.path,
     name: info?.name ?? null,
