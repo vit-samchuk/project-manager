@@ -100,6 +100,12 @@ const updateProject = async (branch) => {
   const projects = await loadProjects();
   const project = projects.find((p) => p.branch === branch)
   
+  if (!project) return null;
+  
+  if (!(await fs.access(project.path).then(() => true).catch(() => false))) {
+    return null; 
+  }
+  
   await git.pull(project.path);
   
   const info = await getPackageInfo(project.path);
