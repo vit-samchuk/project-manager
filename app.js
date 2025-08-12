@@ -4,6 +4,7 @@ const fs = require('fs/promises');
 const path = require('path');
 const bodyParser = require('body-parser');
 
+const errorHandler = require('./middleware/error.middleware');
 const projectRoutes = require('./routes/projects.route');
 const { getReadmeHtml } = require('./services/readme.service');
 
@@ -23,6 +24,7 @@ app.get('/', async (req, res) => {
 });
 
 app.use('/api/projects', projectRoutes);
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

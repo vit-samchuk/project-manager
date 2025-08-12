@@ -1,34 +1,34 @@
 const express = require('express');
 const auth = require('../middleware/auth.middleware')
 const { addProject, removeProject, updateProject } = require('../services/projects.service');
-
+const handler = require('../utils/async-handler');
 const router = express.Router();
 
-router.post('/gh-hook', auth, async (req, res) => {
+router.post('/gh-hook', auth, handler(async (req, res) => {
   const event = req.headers['x-github-event'];
   const branch = req.body.ref?.replace('refs/heads/', '') || req.body.ref;
   const clone_url = req.body.repository.clone_url;
-
+  
   let result = null;
   
   const start = new Date()
   
   console.log(`《${start.toLocaleString()}》`)
   console.log({ branch, clone_url, event })
-
+  
   if (event === 'create' && req.body.ref_type === 'branch') {
     result = await addProject({ branch, clone_url });
-  } 
+  }
   else if (event === 'delete' && req.body.ref_type === 'branch') {
     result = await removeProject(branch);
-  } 
+  }
   else if (event === 'push' && branch !== process.env.GIT_MAIN_BRANCH) {
     result = await updateProject(branch);
   }
-
+  
   console.log(`○○○ Done in ${(new Date() - start).toFixed(2)} ms`)
   res.json({ success: true, branch, result });
-});
+}));
 
 
 // router.post('/', auth, async (req, res) => {
