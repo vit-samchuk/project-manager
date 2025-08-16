@@ -1,10 +1,6 @@
 const simpleGit = require('simple-git');
 const fs = require('fs/promises');
 
-const git = simpleGit();
-git.addConfig('user.name', process.env.GIT_USER_NAME);
-git.addConfig('user.email', process.env.GIT_USER_EMAIL);
-
 async function clone(url, b, p) {
   const git = simpleGit();
   await git.clone(url, p, ['-b', b, '--single-branch']);

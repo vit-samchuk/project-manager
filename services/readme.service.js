@@ -6,10 +6,15 @@ const { commitAndPush } = require('./git.service');
 const templatePath = path.join(__dirname, '../readme.template.md');
 const readmePath = path.join(__dirname, '../readme.md');
 const dataPath = path.join(__dirname, '../projects.json');
+const root_url = process.env.PROJECTS_ROOT_URL;
+const _url = root_url.split('https://')[1];
+if (!_url?.length) {
+  throw new Error('Not valid PROJECTS_ROOT_URL')
+}
 
 const formatProject = (p) => {
   const title = p.name || p.branch;
-  const url = `https://${p.dir}.projects.do-code.com`;
+  const url = `https://${p.dir}.${_url}`
 
   let lines = [];
 
