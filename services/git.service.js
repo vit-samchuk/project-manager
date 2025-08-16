@@ -21,7 +21,8 @@ async function pull(p) {
   await git.pull();
 }
 
-async function commitAndPush(message) {
+async function commitAndPush(message = 'Readme update') {
+  const git = simpleGit()
   await git.add('./readme.md');
   await git.commit(message);
   await git.push('origin', process.env.GIT_MAIN_BRANCH);

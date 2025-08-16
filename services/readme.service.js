@@ -29,7 +29,7 @@ const formatProject = (p) => {
 };
 
 
-const getReadmeHtml = async (param) => {
+const getReadmeHtml = async () => {
   const readme = await fs.readFile(readmePath, 'utf-8');
   const html = marked.parse(readme);
   return `
@@ -50,14 +50,14 @@ const getReadmeHtml = async (param) => {
   `;
 }
 
-const generateReadme = async (projects) => {
+const generateReadme = async (projects, msg) => {
   console.log(projects)
   const template = await fs.readFile(templatePath, 'utf-8');
   const projectList = projects.map(formatProject).join('\n\n');
   
   const rendered = template.replace('{{projects}}', projectList);
   await fs.writeFile(readmePath, rendered);
-  // todo commit and push
+  await commitAndPush(msg)
 }
 
 module.exports = { generateReadme, getReadmeHtml };

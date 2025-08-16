@@ -72,7 +72,7 @@ const addProject = async ({ branch, clone_url, branch_url }) => {
   
   projects.push(project);
   await fs.writeFile(dataPath, JSON.stringify(projects, null, 2));
-  await generateReadme(projects);
+  await generateReadme(projects, `[${branch}] created`);
   
   return project;
 }
@@ -90,7 +90,7 @@ const removeProject = async (branch) => {
   
   const filtered = projects.filter(p => p.branch !== branch);
   await fs.writeFile(dataPath, JSON.stringify(filtered, null, 2));
-  await generateReadme(filtered);
+  await generateReadme(filtered, `[${branch}] deleted`);
   
   return project;
 }
@@ -115,7 +115,9 @@ const updateProject = async (branch) => {
     project.name = info.name ?? null;
     project.description = info.description ?? null;
     await fs.writeFile(dataPath, JSON.stringify(projects, null, 2));
-    await generateReadme(projects);
+    
+    await generateReadme(projects, `[${branch}] update`);
+  
   }
   return project;
 }
