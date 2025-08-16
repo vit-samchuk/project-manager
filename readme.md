@@ -25,4 +25,4 @@ This setup simplifies testing, deployment, and hosting of multiple projects in a
 ## Projects
 - [Empty branch](https://empty.projects.do-code.com)
   - Branch: empty
-  - Empty branch for cloning.
+  - Empty branch for cloning
