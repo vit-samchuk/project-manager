@@ -23,5 +23,6 @@ This setup simplifies testing, deployment, and hosting of multiple projects in a
 ! This project is built specifically for my internal workflows and is not intended for production use by others.
 
 ## Projects
-- [Example Project](https://example.com)
-
+- [Empty branch](https://empty.projects.do-code.com)
+  - Branch: empty
+  - Empty branch for cloning.
