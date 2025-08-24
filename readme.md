@@ -26,3 +26,7 @@ This setup simplifies testing, deployment, and hosting of multiple projects in a
 - [Empty branch](https://empty.projects.do-code.com)
   - Branch: empty
   - Empty branch for cloning
+
+- [Blur test](https://tg-blur-test.projects.do-code.com)
+  - Branch: [tg-blur-test](https://github.com/vit-samchuk/project-manager/tree/tg-blur-test)
+  - Test page for css blur filter
